@@ -1,0 +1,46 @@
+// px to rem
+@function rem($pixels, $context: $mainFontSize) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+  @return calc($pixels / $context) * 1rem;
+}
+
+@mixin size($width,$height: $width) {
+  width: $width;
+  height: $height;
+}
+
+// transitions
+@mixin trans01s {
+  transition: 0.1s all;
+}
+@mixin trans02s {
+  transition: 0.2s all;
+}
+
+// border radius
+@mixin roundBorder($height) {
+  border-top-right-radius: $height / 2;
+  border-bottom-right-radius: $height / 2;
+  border-top-left-radius: $height / 2;
+  border-bottom-left-radius: $height / 2;
+} 
+@mixin roundLeftBorder($height) {
+  border-top-left-radius: $height / 2;
+  border-bottom-left-radius: $height / 2;
+} 
+@mixin roundRightBorder($height) {
+  border-top-right-radius: $height / 2;
+  border-bottom-right-radius: $height / 2;
+}
+
+// background image settings
+@mixin bgImage {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

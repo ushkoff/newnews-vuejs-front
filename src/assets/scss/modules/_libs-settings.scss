@@ -1,0 +1,32 @@
+// bootstrap grid with no gutters
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+  [class^="col-"], [class*=" col-"] {
+    padding-right: 0;
+    padding-left: 0;
+  }
+}
+
+// Sweetalert2
+.swal2-container {
+  font-family: 'Open Sans';
+  .swal2-title {
+    font-family: 'Montserrat';
+    font-size: rem(30px);
+    font-weight: 400;
+    color: $blue-title-base;
+  }
+  #swal2-content {
+    color: $grey-font-dark;
+    font-size: rem(16px);
+  }
+  .swal2-actions{
+    button {
+      font-size: rem(14px);
+      border-radius: 2px;
+    }
+    .swal2-confirm { background-color: $confirm-color }
+    .swal2-cancel { background-color: $cancel-color }
+  }
+}
