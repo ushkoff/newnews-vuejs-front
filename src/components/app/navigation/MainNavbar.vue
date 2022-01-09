@@ -102,7 +102,7 @@ export default {
 nav {
   height: 50px /* Collapsed navigation height */;
   margin-left: 1.25rem;
-  margin-right: 2rem;
+  margin-right: 1.25rem;
   /* Hide the checkbox */
   .toggle {
     position: absolute;
@@ -114,7 +114,7 @@ nav {
   }
   .navigation-inner {
     display: flex;
-    height: 50px /* Collapsed navigation height */;
+    height: 40px /* Collapsed navigation height */;
     margin: 0 auto;
     overflow: hidden;
     ul {

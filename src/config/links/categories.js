@@ -8,6 +8,6 @@ export default {
     { id: 6, title: 'Show Business', slug: 'show-business', faIcon: 'fas fa-meteor', imgPath: 'assets/img/pages/categories/show-business.jpg' },
     { id: 7, title: 'Society', slug: 'society', faIcon: 'fas fa-globe-americas', imgPath: 'assets/img/pages/categories/society.jpg' },
     { id: 8, title: 'Nature', slug: 'nature', faIcon: 'fas fa-tree', imgPath: 'assets/img/pages/categories/nature.jpg' },
-    { id: 9, title: 'Other', slug: 'other', faIcon: '', imgPath: 'assets/img/pages/categories/category.jpg' }
+    { id: 9, title: 'Other', slug: 'other', faIcon: 'fas fa-comment-dots', imgPath: 'assets/img/pages/categories/category.jpg' }
   ]
 }

@@ -223,7 +223,6 @@ header {
   .user-btn {
     .username {
       max-width: 150px;
-      margin-left: 2rem;
       font-family: 'Montserrat';
       font-size: rem(16px);
       font-weight: 400;
@@ -236,9 +235,6 @@ header {
   }
   .logout-btn {
     margin-left: 1rem;
-  }
-  .sign-in-btn {
-    margin-left: 1.25rem;
   }
   .logout-btn, .sign-in-btn {
     cursor: pointer;

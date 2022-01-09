@@ -26,6 +26,7 @@ $enable-deprecation-messages: false;
 
 // Libs
 @import '~bootstrap/scss/bootstrap';
+@import '~swiper/dist/css/swiper.css';
 
 html {
 	font-size: $mainFontSize;

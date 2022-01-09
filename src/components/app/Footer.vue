@@ -85,7 +85,7 @@ export default {
 footer {
   font-size: rem(12px);
   line-height: 14px;
-  background-color: $grey-bg-light;
+  background-color: $grey-bg-semi-dark;
   .extra-quote {
     display: block;
     color: $grey-font-light;
