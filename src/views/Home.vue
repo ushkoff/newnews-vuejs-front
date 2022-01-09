@@ -60,12 +60,6 @@
 @import '@/assets/scss/utils/vars';
 @import '@/assets/scss/utils/mixins';
 
-// TEMPORARY
-.home {
-  height: 2500px;
-}
-
-
 .main-section-title {
   @include mainSectionTitle;
 }
