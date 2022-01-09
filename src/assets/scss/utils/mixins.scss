@@ -24,18 +24,18 @@
 
 // border radius
 @mixin roundBorder($height) {
-  border-top-right-radius: $height / 2;
-  border-bottom-right-radius: $height / 2;
-  border-top-left-radius: $height / 2;
-  border-bottom-left-radius: $height / 2;
+  border-top-right-radius: calc($height / 2);
+  border-bottom-right-radius: calc($height / 2);
+  border-top-left-radius: calc($height / 2);
+  border-bottom-left-radius: calc($height / 2);
 } 
 @mixin roundLeftBorder($height) {
-  border-top-left-radius: $height / 2;
-  border-bottom-left-radius: $height / 2;
+  border-top-left-radius: calc($height / 2);
+  border-bottom-left-radius: calc($height / 2);
 } 
 @mixin roundRightBorder($height) {
-  border-top-right-radius: $height / 2;
-  border-bottom-right-radius: $height / 2;
+  border-top-right-radius: calc($height / 2);
+  border-bottom-right-radius: calc($height / 2);
 }
 
 // background image settings
@@ -44,3 +44,132 @@
   background-position: center;
   background-size: cover;
 }
+
+/**
+  COMMON MIXINS
+**/
+@mixin mainSectionTitle {
+  background-color: $grey-bg-dark;
+  font-family: 'Montserrat';
+  text-transform: uppercase;
+  color: $grey-font-title;
+  font-size: rem(35px);
+  padding: 10px 85px;
+  @media screen and (max-width: $desktopWidth) {
+      font-size: rem(30px);
+      padding: 10px 50px;
+  }
+  @media screen and (max-width: $smDesktopWidth) {
+      margin-left: 0;
+      text-align: center;
+      display: block;
+  }
+  @media screen and (max-width: $phoneWidth) {
+      padding: 10px 15px;
+  }
+}
+.main-section-title {
+  @include mainSectionTitle;
+}
+
+// big purple btn
+@mixin bigPurpleBtn {
+  background-color: $purple-bg-light;
+  font-family: 'Montserrat';
+  font-size: rem(20px);
+  text-transform: uppercase;
+  color: #fff;
+  height: 45px;
+}
+
+// to display some hash (like SHA256)
+@mixin hash {
+  display: inline-block;
+  font-family: 'Source Sans Pro';
+  font-weight: 400;
+  font-size: rem(15px);
+  font-style: normal;
+  color: $grey-font-base;
+  letter-spacing: 0.5px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/**
+    NEWS MIXINS
+**/
+
+// news block
+@mixin newsTitle {
+  font-size: rem(22px);
+  font-weight: 600;
+  color: $link-blue-base;
+  line-height: rem(23px);
+  margin-bottom: 5px;
+}
+@mixin newsContent {
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-size: rem(16px);
+  color: $grey-font-for-bg;
+  max-height: 365px;
+  overflow: hidden;
+  white-space: wrap;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+@mixin newsDateCat {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: $grey-font-for-bg;
+  text-transform: uppercase;
+  @include newsCat;
+}
+@mixin newsCat {
+  text-decoration: none;
+  color: $grey-font-for-bg;
+}
+@mixin newsLink {
+  font-size: rem(20px);
+  font-weight: 600;
+  color: $link-blue-base;
+  text-decoration: none;
+  .fa-angle-double-right {
+    position: relative;
+    top: 1px;
+    left: 0;
+    @include trans01s;
+  }
+  &:hover {
+    .fa-angle-double-right {
+      left: 5px;
+    }
+  }
+}
+@mixin newsFixCat {
+  font-size: rem(14px);
+  font-weight: 600;
+  color: $grey-font-for-bg;
+  text-transform: uppercase;
+  .news-link-cat {
+    text-decoration: none;
+    color: $grey-font-for-bg;
+    &:hover { text-decoration: underline }
+  }
+}
+
+@mixin readMoreBtn {
+  @include newsLink;
+  font-family: 'Montserrat';
+  font-size: rem(16px);
+  font-weight: 500;
+  font-style: italic;
+  @media screen and (max-width: $smDesktopWidth) {
+    top: 25px;
+  }
+  .fa-angle-double-right {
+    margin-left: 3px;
+  }
+}
+

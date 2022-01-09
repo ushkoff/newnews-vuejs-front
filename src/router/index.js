@@ -4,21 +4,21 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-  // //
-  // // Common
-  // //
-  // {
-  //   path: '/',
-  //   name: 'home',
-  //   meta: { layout: 'main' },
-  //   component: () => import('../views/Home.vue')
-  // },
-  // {
-  //   path: '*',
-  //   name: 'page-404',
-  //   meta: { layout: 'empty' },
-  //   component: () => import('../views/Page404.vue')
-  // },
+  //
+  // Common
+  //
+  {
+    path: '/',
+    name: 'home',
+    meta: { layout: 'main' },
+    component: () => import('../views/Home.vue')
+  },
+  {
+    path: '*',
+    name: 'page-404',
+    meta: { layout: 'empty' },
+    component: () => import('../views/404.vue')
+  },
 
   // //
   // // News

@@ -2,7 +2,7 @@ export default {
   //
   // Common
   //
-  cookieAttentionExpiresInDays: process.env.VUE_APP_COOKIE_ATTENTION_EXPIRES_IN_DAYS, // for "Cookie-attention" alert
+  cookieAlertExpiresInDays: process.env.VUE_APP_COOKIE_ALERT_EXPIRES_IN_DAYS, // for cookie-alert
 
   //
   // User settings
