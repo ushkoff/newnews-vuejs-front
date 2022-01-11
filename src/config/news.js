@@ -5,7 +5,7 @@ export default {
   // If news have more than that number (and that) then it will be signed as confirmed
   minConfirmedNewsRating: process.env.VUE_APP_MIN_CONFIRMED_NEWS_RATING, 
   // if news have less than that number (and that) then it will be signed as wrong
-  minWrongNewsRatingAbsValue: process.env.VUE_APP_MIN_WRONG_NEWS_RATING, 
+  minWrongNewsRatingAbsValue: process.env.VUE_APP_MIN_WRONG_NEWS_RATING_ABS, 
   
   //
   // News settings
@@ -18,6 +18,9 @@ export default {
   // Home page
   latestNewsNumberOnHomePage: 12, // for "Latest news" block
   randomCategoryNewsNumberOnHomePage: 5, // for "Randpm category & Category list" block
+
+  // Sidebar
+  randomCategoryNewsNumberInSidebar: 5,
 
   // "Your news" settings
   yourNewsNumberOnAddNewsPage: 5, // for "Your news" block

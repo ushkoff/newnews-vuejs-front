@@ -21,21 +21,21 @@ const routes = [
     component: () => import('../views/404.vue')
   },
 
-  // //
-  // // News
-  // //
-  // {
-  //   path: '/global-news',
-  //   name: 'global-news',
-  //   meta: { layout: 'main' },
-  //   component: () => import('../views/news/GlobalNews.vue')
-  // },
-  // {
-  //   path: '/local-news',
-  //   name: 'local-news',
-  //   meta: { layout: 'main', auth: true },
-  //   component: () => import('../views/news/LocalNews.vue')
-  // },
+  //
+  // News
+  //
+  {
+    path: '/global-news',
+    name: 'global-news',
+    meta: { layout: 'main' },
+    component: () => import('../views/news/GlobalNews.vue')
+  },
+  {
+    path: '/local-news',
+    name: 'local-news',
+    meta: { layout: 'main', auth: true },
+    component: () => import('../views/news/LocalNews.vue')
+  },
   // {
   //   path: '/article/:id',
   //   name: 'article',

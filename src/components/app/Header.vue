@@ -16,7 +16,7 @@
           )
 
         //- Main navigation
-        MainNavbar
+        MainNavbar(ref="mainNavbar")
 
       //- Search field
       div(class="d-flex align-items-center justify-content-fhd-left justify-content-between")
@@ -139,6 +139,10 @@ export default {
         document.querySelectorAll('.main-logo')[1].style.backgroundImage = `url('${this.publicPath + this.nnLogoNoShadowPath}')`
       }
     },
+
+    closeNavMenu() {
+      this.$refs.mainNavbar.autoCloseMenu()
+    }
   },
   async mounted () {
     window.addEventListener('scroll', this.changeHeaderStyle)

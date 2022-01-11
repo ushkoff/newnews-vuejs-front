@@ -26,10 +26,12 @@ Vue.use(tabTitlePlugin)
 import VueRecaptcha from 'vue-recaptcha'
 import NewnewsLoader from '@/components/app/loaders/NewnewsLoader'
 import DefaultLoader from '@/components/app/loaders/DefaultLoader'
+import LoadMoreBtn from '@/components/app/common/LoadMoreBtn'
 
 Vue.component('vue-recaptcha', VueRecaptcha)
 Vue.component('NewnewsLoader', NewnewsLoader)
 Vue.component('DefaultLoader', DefaultLoader)
+Vue.component('LoadMoreBtn', LoadMoreBtn)
 
 Vue.prototype.$http = axios
 Vue.prototype.$api = process.env.VUE_APP_API

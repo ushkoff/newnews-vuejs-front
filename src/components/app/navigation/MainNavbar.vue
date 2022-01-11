@@ -11,7 +11,7 @@
             tag="li"
             active-class="active"
             class="text-nowrap"
-            @click="toggleMenu(activeStyle)"
+            @click.native="autoCloseMenu()"
           )
             a(href="#") {{ link.title }}
 
@@ -58,6 +58,12 @@ export default {
       document.querySelector('.navigation-toggle svg').style.cssText = 'transform: rotate(0); top: -3px'
 
       this.isActive = false
+    },
+    autoCloseMenu() {
+      if (this.isActive) {
+        const closeBtn = document.querySelector('.navigation-toggle label')
+        closeBtn.click()
+      }
     },
     changeMenuStyle() {
       // If page was scrolled then change style to dark

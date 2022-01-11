@@ -71,6 +71,7 @@ export default {
   mutations: {
     updateAuthToken (state, token) {
       localStorage.setItem('access_token', token)
+      state.authToken = localStorage.getItem('access_token')
     },
     destroyAuthToken (state) {
       state.authToken = null
