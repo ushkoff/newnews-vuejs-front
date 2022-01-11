@@ -38,25 +38,18 @@ export default {
     quantity: cfg.randomCategoryNewsNumberOnHomePage,
     userID: null
   }),
-//   computed: {
-//     userLoggedIn () { return this.$store.getters.loggedIn }
-//   },
-  computed: mapGetters(['randomCategoryArticles']),
+  computed: mapGetters(['randomCategoryArticles', 'userLoggedIn', 'userData']),
   methods: {
-    ...mapActions(['fetchRandomCategoryArticles']),
-    // async getUserID () {
-    //   await this.$store.dispatch('getUserData')
-    //   this.userID = this.userLoggedIn ? this.$store.getters.getUserData.id : ''
-    //   this.requestData = this.userLoggedIn ? { user_id: parseInt(this.userID) } : ''
-    // },
+    ...mapActions(['fetchRandomCategoryArticles', 'fetchUserData']),
+
     async loadRandomCategoryNews () {
       const data = {
-            quantity: this.quantity,
-            userID: this.userID
-        }
-        await this.fetchRandomCategoryArticles(data).then(() => {
-            this.loading = false
-        }).catch((e) => { throw e })
+        quantity: this.quantity,
+        userID: this.userID
+      }
+      await this.fetchRandomCategoryArticles(data).then(() => {
+          this.loading = false
+      }).catch((e) => { throw e })
     },
 
     changeBackground () {
@@ -69,7 +62,11 @@ export default {
     }
   },
   async mounted () {
-    // await this.getUserID()
+    if (this.userLoggedIn) {
+      await this.fetchUserData().then(() => {
+        this.userID = this.userData.id
+      })
+    }
 
     await this.loadRandomCategoryNews()
 

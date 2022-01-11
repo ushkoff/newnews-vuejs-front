@@ -39,14 +39,16 @@
 
         //- if authenticated then show username & button "logout"
         .user-btn(v-if="userLoggedIn" class="ml-fhd-5 ml-lg-4 ml-0 d-flex align-items-center")
+          DefaultLoader(v-if="loading" class="relative m-0 h-0 d-lg-block d-none")
           router-link(
-            :to="{ name: 'settings-page' }"
+            v-else
+            :to="{ name: 'settings' }"
             class="username d-lg-block d-none text-truncate"
-          ) {{ username }}
+          ) {{ name }}
           .logout-btn(
             title="logout"
             class="shadow text-center"
-            @click="logout"
+            @click="logoutHandler"
           ) <i class="fas fa-sign-out-alt"></i></i>
         //- else show button "login"
         .auth-btn(v-else class="ml-lg-4 ml-sm-3 ml-2 d-flex align-items-center")
@@ -61,15 +63,17 @@
 <script>
 import cfg from '@/config/news'
 import { required, maxLength } from 'vuelidate/lib/validators'
+import { mapGetters, mapActions } from 'vuex'
 import MainNavbar from '@/components/app/navigation/MainNavbar'
 
 export default {
   name: 'header-component',
   data: () => ({
+    loading: true,
     publicPath: process.env.BASE_URL,
     maxArticleTitle: cfg.maxArticleTitle,
     searchQuery: '',
-    username: '',
+    name: '',
     // Icons
     nnIconPath: 'assets/img/newnews/icon.png',
     nnLogoPath: 'assets/img/newnews/logo.png',
@@ -80,25 +84,23 @@ export default {
   validations: {
     searchQuery: { required, maxLength: maxLength(256) }
   },
-  computed: {
-    userLoggedIn () { return false }
-  },
+  computed: mapGetters(['userLoggedIn', 'username']),
   methods: {
-  //   async getUsername () {
-  //     await this.$store.dispatch('getUserData')
-  //     this.username = this.userLoggedIn ? this.$store.getters.getUserData.username : ''
-  //   },
-  //   async logout () {
-  //     this.$swal.fire({
-  //       title: 'Saved data',
-  //       text: 'The local storage can store the data of your keys and nodes. If you want to remove your private data, please remove specific fields from your browser Local Storage.',
-  //       icon: 'warning'
-  //     })
+    ...mapActions(['fetchUserData', 'logout']),
 
-  //     await this.$store.dispatch('logout').then((response) => {
-  //       if (this.$route.name !== 'home') this.$router.push({ name: 'home' })
-  //     }).catch((e) => {})
-  //   },
+    async logoutHandler () {
+      // this.$swal.fire({
+      //   title: 'Saved data',
+      //   text: 'The local storage can store the data of your keys and nodes. If you want to remove your private data, please remove specific fields from your browser Local Storage.',
+      //   icon: 'warning'
+      // })
+
+      await this.logout().then(() => {
+        if (this.$route.name !== 'home') this.$router.push({ name: 'home' })
+      })
+
+      console.log(this.userLoggedIn)
+    },
 
     searchSubmit () {
       if (this.$v.$invalid) {
@@ -145,6 +147,13 @@ export default {
       document.querySelector('header').classList.add('header-scroll')
       // setting the logo with no shadow
       this.setIcons(false)
+    }
+
+    if (this.userLoggedIn) {
+      await this.fetchUserData().then(() => {
+        this.loading = false
+        this.name = this.username
+      })
     }
   },
   destroyed () {

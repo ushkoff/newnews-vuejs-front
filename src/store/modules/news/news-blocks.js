@@ -1,7 +1,22 @@
 export default {
+  state: {
+    latestArticles: null,
+    randomCategoryArticles: null
+  },
+  getters: {
+    latestArticles(state) {
+      return state.latestArticles
+    },
+    randomCategoryArticles(state) {
+      return state.randomCategoryArticles
+    }
+  },
   actions: {
     // Latest News
     async fetchLatestArticles(ctx, { quantity, userID }) {
+      this._vm.$http.defaults.headers.common['Accept'] = 'application/json'
+      this._vm.$http.defaults.headers.common['Content-Type'] = 'multipart/form-data'
+
       let data = {
         quantity,
         ...(userID != null) && {user_id: userID}
@@ -12,6 +27,9 @@ export default {
     },
     // Random Category news
     async fetchRandomCategoryArticles(ctx, { quantity, userID }) {
+      this._vm.$http.defaults.headers.common['Accept'] = 'application/json'
+      this._vm.$http.defaults.headers.common['Content-Type'] = 'multipart/form-data'
+
       let data = {
         quantity,
         ...(userID != null) && {user_id: userID}
@@ -27,18 +45,6 @@ export default {
     },
     updateRandomCategoryArticles(state, articles) {
       state.randomCategoryArticles = articles
-    }
-  },
-  state: {
-    latestArticles: null,
-    randomCategoryArticles: null
-  },
-  getters: {
-    latestArticles(state) {
-      return state.latestArticles
-    },
-    randomCategoryArticles(state) {
-      return state.randomCategoryArticles
     }
   }
 }

@@ -52,6 +52,7 @@
 import navList from '@/config/navigation/nav'
 import catList from '@/config/links/categories'
 import docsList from '@/config/links/documents'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'footer-component',
@@ -63,17 +64,18 @@ export default {
     userCountry: ''
   }),
   computed: {
-    getYearNow () { return new Date().getFullYear() },
-    userLoggedIn () { return false }
+    ...mapGetters(['userLoggedIn', 'userData']),
+    getYearNow () { return new Date().getFullYear() }
   },
   methods: {
-    async getUserCountry () {
-      // await this.$store.dispatch('getUserData')
-      this.userCountry = this.userLoggedIn ? this.$store.getters.getUserData.country : ''
-    }
+    ...mapActions(['fetchUserData'])
   },
   async mounted () {
-    await this.getUserCountry()
+    if (this.userLoggedIn) {
+      await this.fetchUserData().then(() => {
+        this.userCountry = this.userData.country
+      })
+    }
   }
 }
 </script>

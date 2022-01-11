@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -82,39 +83,43 @@ const routes = [
   //   component: () => import('../views/user/Settings.vue')
   // },
 
-  // //
-  // // Auth
-  // //
-  // {
-  //   path: '/login',
-  //   name: 'login',
-  //   meta: { layout: 'empty' },
-  //   component: () => import('../views/auth/Login.vue')
-  // },
-  // {
-  //   path: '/register',
-  //   name: 'register',
-  //   meta: { layout: 'empty' },
-  //   component: () => import('../views/auth/Register.vue')
-  // },
-  // {
-  //   path: '/select-location',
-  //   name: 'select-location',
-  //   meta: { layout: 'empty' },
-  //   component: () => import('../views/auth/SelectLocation.vue')
-  // },
-  // {
-  //   path: '/lost-password',
-  //   name: 'lost-password',
-  //   meta: { layout: 'empty' },
-  //   component: () => import('../views/auth/LostPassword.vue')
-  // },
-  // {
-  //   path: '/reset-password/:token',
-  //   name: 'reset-password',
-  //   meta: { layout: 'empty' },
-  //   component: () => import('../views/auth/ResetPassword.vue')
-  // },
+  //
+  // Auth
+  //
+  {
+    path: '/login',
+    name: 'login',
+    meta: { layout: 'empty' },
+    component: () => import('../views/auth/Login.vue')
+  },
+  {
+    path: '/register',
+    name: 'register',
+    meta: { layout: 'empty' },
+    component: () => import('../views/auth/Register.vue')
+  },
+  {
+    path: '/lost-password',
+    name: 'lost-password',
+    meta: { layout: 'empty' },
+    component: () => import('../views/auth/LostPassword.vue')
+  },
+  {
+    path: '/reset-password/:token',
+    name: 'reset-password',
+    meta: { layout: 'empty' },
+    component: () => import('../views/auth/ResetPassword.vue')
+  },
+
+  //
+  // Location
+  //
+  {
+    path: '/select-location',
+    name: 'select-location',
+    meta: { layout: 'empty' },
+    component: () => import('../views/auth/SelectLocation.vue')
+  },
 
   // //
   // // Blockchain + NWC
@@ -151,6 +156,18 @@ const router = new VueRouter({
   routes,
   scrollBehavior () {
     document.getElementById('app').scrollIntoView()
+  }
+})
+
+// For routes that need auth middleware
+router.beforeEach((to, from, next) => {
+  const requireAuth = to.matched.some(record => record.meta.auth)
+  const userLoggedIn = store.getters.userLoggedIn
+
+  if (requireAuth && !userLoggedIn) {
+    next({ name: 'login' })
+  } else {
+    next()
   }
 })
 

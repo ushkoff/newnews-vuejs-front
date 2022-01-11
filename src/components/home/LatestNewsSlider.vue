@@ -69,14 +69,9 @@ export default {
       }
     }
   }),
-  computed: mapGetters(['latestArticles']),
+  computed: mapGetters(['latestArticles', 'userLoggedIn', 'userData']),
   methods: {
-    ...mapActions(['fetchLatestArticles']),
-    // async getUserID () {
-    //   await this.$store.dispatch('getUserData')
-    //   this.userID = this.userLoggedIn ? this.$store.getters.getUserData.id : ''
-    //   this.requestData = this.userLoggedIn ? { user_id: parseInt(this.userID) } : ''
-    // },
+    ...mapActions(['fetchLatestArticles', 'fetchUserData']),
 
     async loadLatestNews() {
         const data = {
@@ -89,8 +84,12 @@ export default {
     }
   },
   async mounted () {
-    // await this.getUserID()
-    
+    if (this.userLoggedIn) {
+      await this.fetchUserData().then(() => {
+        this.userID = this.userData.id
+      })
+    }
+
     await this.loadLatestNews()
   }
 }
