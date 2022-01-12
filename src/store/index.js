@@ -5,6 +5,8 @@ import Vuex from 'vuex'
 import globalNews from './modules/news/global'
 import localNews from './modules/news/local'
 import newsBlocks from './modules/news/news-blocks'
+import globalCategoryNews from './modules/news/categories/global'
+import localCategoryNews from './modules/news/categories/local'
 // Auth
 import auth from './modules/auth/auth'
 import passwordReset from './modules/auth/password-reset'
@@ -19,6 +21,8 @@ export default new Vuex.Store({
     globalNews,
     localNews,
     newsBlocks,
+    globalCategoryNews,
+    localCategoryNews,
     auth,
     passwordReset,
     user,

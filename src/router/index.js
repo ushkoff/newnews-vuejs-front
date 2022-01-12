@@ -54,24 +54,28 @@ const routes = [
   //   meta: { layout: 'main', auth: true },
   //   component: () => import('../views/news/EditNews.vue')
   // },
-  // {
-  //   path: '/categories',
-  //   name: 'categories',
-  //   meta: { layout: 'main' },
-  //   component: () => import('../views/categories/Categories.vue')
-  // },
-  // {
-  //   path: '/global-news/category/:slug',
-  //   name: 'global-news-by-category',
-  //   meta: { layout: 'main' },
-  //   component: () => import('../views/categories/GlobalNews.vue')
-  // },
-  // {
-  //   path: '/local-news/category/:slug',
-  //   name: 'local-news-by-category',
-  //   meta: { layout: 'main', auth: true },
-  //   component: () => import('../views/categories/LocalNews.vue')
-  // },
+
+  //
+  // Categories
+  // 
+  {
+    path: '/categories',
+    name: 'categories',
+    meta: { layout: 'main' },
+    component: () => import('../views/categories/Categories.vue')
+  },
+  {
+    path: '/global-news/category/:slug',
+    name: 'global-news-by-category',
+    meta: { layout: 'main' },
+    component: () => import('../views/categories/GlobalCategoryNews.vue')
+  },
+  {
+    path: '/local-news/category/:slug',
+    name: 'local-news-by-category',
+    meta: { layout: 'main', auth: true },
+    component: () => import('../views/categories/LocalCategoryNews.vue')
+  },
 
   // //
   // // User

@@ -2,7 +2,7 @@
   div
     .def-page-header(:style="{'background-image': `url('${publicPath}assets/img/pages/news/local/header.jpg')`}")
       .container(class="d-flex align-items-center justify-content-center justify-content-md-start pt-5")
-        span.def-page-header-name(class="pl-4 pr-4") Local news
+        span.def-page-header-name(class="pl-4 pr-4") Local News <span class="your-location ml-3">({{ userCountry }})</span>
     .container(class="mt-4 mt-md-5")
       .row
         div(class="news-container col-12 col-xl-8")

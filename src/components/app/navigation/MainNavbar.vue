@@ -7,7 +7,7 @@
           router-link(
             v-for="link in navLinks"
             :key="link.route"
-            :to="{ path: link.route }"
+            :to="{ name: link.route }"
             tag="li"
             active-class="active"
             class="text-nowrap"
