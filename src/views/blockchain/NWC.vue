@@ -24,7 +24,7 @@ div
 
     .nwc-page-online-whitepaper(class="mt-2 mt-lg-5 pt-5")
       span.main-section-title Online Whitepaper
-      embed(src="https://bitcoin.org/bitcoin.pdf" class="mt-4 mt-lg-5 d-block mx-auto"  type="application/pdf")
+      embed(src="https://bitcoin.org/bitcoin.pdf" class="w-100 mt-4 mt-lg-5 d-block mx-auto"  type="application/pdf")
 
 </template>
 

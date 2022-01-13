@@ -8,6 +8,7 @@ import localNews from './modules/news/lists/local'
 import newsBlocks from './modules/news/lists//news-blocks'
 import globalCategoryNews from './modules/news/categories/global'
 import localCategoryNews from './modules/news/categories/local'
+import yourNews from './modules/news/lists/your'
 // News Rating
 import rating from './modules/news/rating'
 // Auth
@@ -30,6 +31,7 @@ export default new Vuex.Store({
     newsBlocks,
     globalCategoryNews,
     localCategoryNews,
+    yourNews,
     rating,
     auth,
     passwordReset,

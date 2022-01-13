@@ -25,6 +25,7 @@ export default {
         ctx.commit('updateLatestArticles', response.data.data)
       }).catch((e) => { throw e })
     },
+
     // Random Category news
     async fetchRandomCategoryArticles(ctx, { quantity, userID }) {
       this._vm.$http.defaults.headers.common['Accept'] = 'application/json'

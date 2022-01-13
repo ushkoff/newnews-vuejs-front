@@ -42,12 +42,12 @@ const routes = [
     meta: { layout: 'main' },
     component: () => import('../views/news/Article.vue')
   },
-  // {
-  //   path: '/add-news',
-  //   name: 'add-news',
-  //   meta: { layout: 'main', auth: true },
-  //   component: () => import('../views/news/AddNews.vue')
-  // },
+  {
+    path: '/add-news',
+    name: 'add-news',
+    meta: { layout: 'main', auth: true },
+    component: () => import('../views/news/AddNews.vue')
+  },
   // {
   //   path: '/article/:id/edit',
   //   name: 'edit-news',
