@@ -36,12 +36,12 @@ const routes = [
     meta: { layout: 'main', auth: true },
     component: () => import('../views/news/LocalNews.vue')
   },
-  // {
-  //   path: '/article/:id',
-  //   name: 'article',
-  //   meta: { layout: 'main' },
-  //   component: () => import('../views/news/Article.vue')
-  // },
+  {
+    path: '/article/:id',
+    name: 'article',
+    meta: { layout: 'main' },
+    component: () => import('../views/news/Article.vue')
+  },
   // {
   //   path: '/add-news',
   //   name: 'add-news',
@@ -77,15 +77,15 @@ const routes = [
     component: () => import('../views/categories/LocalCategoryNews.vue')
   },
 
-  // //
-  // // User
-  // //
-  // {
-  //   path: '/settings',
-  //   name: 'settings',
-  //   meta: { layout: 'main', auth: true },
-  //   component: () => import('../views/user/Settings.vue')
-  // },
+  //
+  // User
+  //
+  {
+    path: '/settings',
+    name: 'settings',
+    meta: { layout: 'main', auth: true },
+    component: () => import('../views/user/Settings.vue')
+  },
 
   //
   // Auth
@@ -125,15 +125,15 @@ const routes = [
     component: () => import('../views/auth/SelectLocation.vue')
   },
 
-  // //
-  // // Blockchain + NWC
-  // //
-  // {
-  //   path: '/nwc',
-  //   name: 'nwc',
-  //   meta: { layout: 'main' },
-  //   component: () => import('../views/NWC.vue')
-  // },
+  //
+  // Blockchain + NWC
+  //
+  {
+    path: '/nwc',
+    name: 'nwc',
+    meta: { layout: 'main' },
+    component: () => import('../views/blockchain/NWC.vue')
+  },
   // {
   //   path: '/transactions',
   //   name: 'transactions',
@@ -152,6 +152,16 @@ const routes = [
   //   meta: { layout: 'main', auth: true },
   //   component: () => import('../views/blockchain/AddNode.vue')
   // }
+
+  //
+  // Documents
+  //
+  {
+    path: '/privacy-policy',
+    name: 'privacy-policy',
+    meta: { layout: 'main' },
+    component: () => import('../views/documents/PrivacyPolicy.vue')
+  }
 ]
 
 const router = new VueRouter({

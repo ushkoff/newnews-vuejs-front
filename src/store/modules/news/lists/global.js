@@ -61,10 +61,8 @@ export default {
   },
   mutations: {
     updateGlobalNews (state, { articles, isNext }) {
-      if (!isNext)
-        state.globalNews = articles
-      else
-        state.globalNews = state.globalNews.concat(articles)
+      if (!isNext) state.globalNews = articles
+      else state.globalNews = state.globalNews.concat(articles)
     },
     clearGlobalNews (state) {
       state.globalNews = null

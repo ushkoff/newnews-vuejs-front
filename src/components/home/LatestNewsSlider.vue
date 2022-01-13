@@ -12,7 +12,7 @@
         class="mt-5 pl-4 pr-4"
       )
         router-link(
-          :to="{ name: 'news-post', params: { id: article.id } }"
+          :to="{ name: 'article', params: { id: article.id } }"
           class="latest-title"
         ) {{ article.title }}
         p.latest-content(v-text="article.content")

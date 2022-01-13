@@ -98,8 +98,6 @@ export default {
       await this.logout().then(() => {
         if (this.$route.name !== 'home') this.$router.push({ name: 'home' })
       })
-
-      console.log(this.userLoggedIn)
     },
 
     searchSubmit () {

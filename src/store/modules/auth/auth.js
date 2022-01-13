@@ -1,6 +1,6 @@
 export default {
   state: {
-    authToken: sessionStorage.getItem('access_token') || null
+    authToken: localStorage.getItem('access_token') || null
   },
   getters: {
     authToken (state) {
@@ -70,12 +70,12 @@ export default {
   },
   mutations: {
     updateAuthToken (state, token) {
-      sessionStorage.setItem('access_token', token)
-      state.authToken = sessionStorage.getItem('access_token')
+      localStorage.setItem('access_token', token)
+      state.authToken = localStorage.getItem('access_token')
     },
     destroyAuthToken (state) {
       state.authToken = null
-      sessionStorage.removeItem('access_token')
+      localStorage.removeItem('access_token')
     }
   }
 }

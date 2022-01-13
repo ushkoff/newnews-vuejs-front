@@ -1,6 +1,6 @@
 export default {
   state: {
-    userData: null
+    userData: {}
   },
   getters: {
     userData (state) {
@@ -26,7 +26,7 @@ export default {
       state.userData = data
     },
     clearUserData (state) {
-      state.userData = null
+      state.userData = {}
     }
   }
 }

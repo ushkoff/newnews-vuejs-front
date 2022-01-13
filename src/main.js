@@ -12,6 +12,7 @@ import VueSweetalert2 from 'vue-sweetalert2'
 // Libs
 import '@fortawesome/fontawesome-free/js/fontawesome'
 import '@fortawesome/fontawesome-free/js/solid'
+import '@fortawesome/fontawesome-free/js/brands'
 
 // Plugins
 import tabTitlePlugin from '@/utils/tab-title.plugin'
