@@ -46,14 +46,14 @@ const routes = [
     path: '/add-news',
     name: 'add-news',
     meta: { layout: 'main', auth: true },
-    component: () => import('../views/news/AddNews.vue')
+    component: () => import('../views/news/manage/AddNews.vue')
   },
-  // {
-  //   path: '/article/:id/edit',
-  //   name: 'edit-news',
-  //   meta: { layout: 'main', auth: true },
-  //   component: () => import('../views/news/EditNews.vue')
-  // },
+  {
+    path: '/article/:id/edit',
+    name: 'edit-news',
+    meta: { layout: 'main', auth: true },
+    component: () => import('../views/news/manage/EditNews.vue')
+  },
 
   //
   // Categories

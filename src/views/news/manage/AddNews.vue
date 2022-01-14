@@ -9,7 +9,7 @@
       .row(class="mt-4 mt-md-5")
         div(class="col-12 col-xl-8")
 
-          // AddNewsForm(@submitted="getNewsDataForNodes")
+          AddNewsForm
 
           YourNews
 
@@ -20,7 +20,7 @@
 
 <script>
 import AuthNavbar from '@/components/app/navigation/AuthNavbar'
-// import AddNewsForm from '@/components/news manage/AddNewsForm'
+import AddNewsForm from '@/components/news/manage/AddNewsForm'
 import YourNews from '@/components/news/YourNews'
 import Sidebar from '@/components/app/Sidebar'
 // import catList from '@/NN config/link-lists/categories'
@@ -41,7 +41,7 @@ export default {
   }),
   components: {
     AuthNavbar,
-    // AddNewsForm,
+    AddNewsForm,
     YourNews,
     Sidebar
   },
