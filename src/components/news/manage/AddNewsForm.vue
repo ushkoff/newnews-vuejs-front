@@ -13,6 +13,24 @@
 
     form.nn-def-form(v-show="!loading" ref="addNewsForm" class="pl-4 pr-4 pb-4 pl-lg-5 pr-lg-5 pb-lg-5" @submit.prevent="validate")
 
+      //- Select mode
+
+      .profile-settings-block
+        span.profile-settings-title
+          | Place where to add news: <span ref="newsModeTitle">{{ addingNewsMode }}</span> | <router-link :to="{ name: 'home' }">NN news</router-link>
+        span.profile-settings-line
+        form(class="mt-3" @change="changeAddingMode")
+          .form-check
+            input#checkWebsite.form-check-input(type="checkbox" name="checkWebsite" v-model="addingNewsWebsite")
+            label.form-check-label(for="checkWebsite") Website
+          .form-check(class="mt-2")
+            input#checkNodes.form-check-input(type="checkbox" @change="checkIfNodesAdded()" name="checkNodes" v-model="addingNewsNodes")
+            label.form-check-label(for="checkNodes") Nodes
+
+      //- Form to select specific nodes to send news
+      SelectNodesForm(v-if="showSelectNodesForm" :ordinaryNodes="ordinaryNodes" :IENodes="IENodes")
+      .nn-def-input-error(v-if="nodesInputError" class="mt-3") Select the node to which you want to send the news
+
       div(class="mt-5")
         span.nn-def-label 1 News Title
         input#textTitleNews(
@@ -47,15 +65,19 @@
         span.nn-def-label 4 News References
         input#textRefsNews(
           type="text" :maxlength="maxRefsNews" v-model.trim="textRefsNews" placeholder="If possible, enter a link to the resource. If there are many links, then use ; " class="nn-def-input mt-2 pl-2 pr-2 pl-lg-3 pr-lg-3"
-          :class="{invalid: ($v.textTitleNews.$dirty && !$v.textTitleNews.maxLength)}"
+          :class="{invalid: ($v.textTitleNews.$dirty && !$v.textTitleNews.maxLength) || refsLenError}"
         )
         .nn-def-counter(class="mt-1") <span v-text="newsRefsCounter"></span>/{{ maxRefsNews }}
         .nn-def-input-error(v-if="$v.textTitleNews.$dirty && !$v.textTitleNews.maxLength" class="mt-2") "News References" field is too long
+        .nn-def-input-error(v-if="refsLenError" class="mt-2") The length of the field is greater than the allowable length of this field in nodes
 
       .agree-with-docs(class="mt-4 d-flex")
         input#agreeNewsOffer(type="checkbox" v-model="agreeNewsRules" class="mr-2")
         label(for="agreeNewsOffer") I confirm the authenticity of the news and agree with the <router-link :to="{ name: 'privacy-policy' }" target="_blank">News Offer</router-link> of NewNews.
       .nn-def-input-error(v-if="$v.agreeNewsRules.$dirty && !$v.agreeNewsRules.checked" class="mt-1") Please agree to the terms of the news
+
+      .nn-def-input-error(v-if="inputLenError" class="mt-1") The length of the INPUT (title + content) is greater than the allowable length of this field in nodes
+      .nn-def-input-error(v-if="prevHrefLenError" class="mt-1") The length of the PREV_HREF (title + IE news link) is greater than the allowable length of this field in nodes
 
       .nn-def-input-error(
         v-if="errMsg != null"
@@ -69,9 +91,11 @@
 <script>
 import cfg from '@/config/news'
 import catList from '@/config/links/categories'
-import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import Quill from 'quill'
+import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import { mapGetters, mapActions } from 'vuex'
+// nodes
+import SelectNodesForm from '@/components/blockchain/nodes/SelectNodesForm'
 
 export default {
   name: 'add-news-form',
@@ -96,14 +120,30 @@ export default {
     userID: null,
     userCountry: null,
     userCountryCode: null,
+
+    // nodes
+    addingNewsMode: 'Website',
+    addingNewsWebsite: true,
+    addingNewsNodes: false,
+    onlyShortNews: false,
+    showSelectNodesForm: false,
+    inputLenError: false,
+    refsLenError: false,
+    prevHrefLenError: false,
+    nodesInputError: false,
+    pickedOrdinaryNodes: {},
+    pickedIENodes: {}
   }),
+  components: {
+    SelectNodesForm
+  },
   validations: {
     textTitleNews: { required, minLength: minLength(10), maxLength: maxLength(101) },
     textRefsNews: { maxLength: maxLength(501) },
     agreeNewsRules: { checked: v => v }
   },
   computed: {
-    ...mapGetters(['userLoggedIn', 'userData']),
+    ...mapGetters(['userLoggedIn', 'userData', 'ordinaryAndIENodesExist', 'ordinaryNodes', 'IENodes', 'articleCryptoData']),
     newsTitleCounter () {
       return this.maxTitleNews - this.textTitleNews.length
     },
@@ -112,46 +152,166 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['fetchUserData', 'storeArticle']),
+    ...mapActions(['fetchUserData', 'storeArticle', 'retrieveOrdinaryAndIENodes', 'retrieveKeyPair', 'fetchArticleCryptoData']),
 
     async submitHandler (recaptchaToken) {
       this.loading = true
 
       const data = {
-        categoryID: this.chooseCategory,
-        userID: this.userID,
         title: this.textTitleNews,
-        contentHtml: this.htmlContentNews,
-        country: this.userCountry,
-        countryCode: this.userCountryCode,
-        refs: this.textRefsNews,
-        recaptchaToken
+        content: this.textContentNews,
+        refs: this.textRefsNews
       }
-      await this.storeArticle(data).then(() => {
-        this.$router.push({ name: 'local-news' })
-        this.$swal.fire(
-            'Success',
-            'Your news has been added to our website.',
-            'success'
-        )
-      }).catch((errMsg) => {
-        this.loading = false
-        this.errMsg = errMsg
-        this.$refs.recaptcha.reset()
-      })
-    },
-    validate () {
-      this.firstHasBeenValidated = true
+      await this.fetchArticleCryptoData(data)
+      
+      if (this.addingNewsWebsite) {
+        const data = {
+          categoryID: this.chooseCategory,
+          userID: this.userID,
+          title: this.textTitleNews,
+          contentHtml: this.htmlContentNews,
+          country: this.userCountry,
+          countryCode: this.userCountryCode,
+          publicKey: this.articleCryptoData.publicKey,
+          signature: this.articleCryptoData.signature,
+          refs: this.textRefsNews,
+          recaptchaToken
+        }
+        await this.storeArticle(data).catch((errMsg) => {
+          this.loading = false
+          this.errMsg = errMsg
+          this.$refs.recaptcha.reset()
+        })
+      }
 
-      if (this.$v.$invalid || this.chooseCategory === 'Choose...' || this.errorTextContentNews) {
+      // nodes
+      if (this.addingNewsNodes) {
+        const addToNodesData = {
+          newsAddedOnWebsite: this.addingNewsWebsite,
+          pickedOrdinaryNodes: this.pickedOrdinaryNodes,
+          pickedIENodes: this.pickedIENodes,
+          hash: this.articleCryptoData.hash,
+          signature: this.articleCryptoData.signature,
+          publicKey: this.articleCryptoData.publicKey,
+          categoryID: this.chooseCategory,
+          userID: this.userID,
+          title: this.textTitleNews,
+          content: this.textContentNews,
+          refs: this.textRefsNews,
+          onlyShortNews: this.onlyShortNews
+        }
+        this.$emit('submitted', addToNodesData)
+      }
+      if (this.addingNewsWebsite && !this.addingNewsNodes) {
+        this.$emit('submitted', { newsAddedOnWebsite: true })
+      }
+    },
+    async validate () {
+      this.clearVariables()
+
+      if (this.$v.$invalid || this.chooseCategory === 'Choose...' || this.errorTextContentNews || (!this.addingNewsWebsite && !this.addingNewsNodes)) {
         this.$v.$touch()
         return false
       }
+
+      // nodes
+      if (this.addingNewsNodes) {
+        await this.nodeNewsValidation().then((response) => {
+          if (response == false)
+            return false
+        })
+      }
+
       this.$refs.recaptcha.execute()
     },
     onCaptchaExpired () {
       this.$refs.recaptcha.reset()
     },
+
+    // nodes
+    changeAddingMode () {
+      this.$refs.newsModeTitle.style.color = '#393838' // set to default color
+      if (this.addingNewsWebsite && this.addingNewsNodes) this.addingNewsMode = 'Website and Nodes'
+      if (this.addingNewsWebsite && !this.addingNewsNodes) this.addingNewsMode = 'Website'
+      if (!this.addingNewsWebsite && this.addingNewsNodes) this.addingNewsMode = 'Nodes'
+      if (!this.addingNewsWebsite && !this.addingNewsNodes) {
+        this.addingNewsMode = '[choose mode]'
+        this.$refs.newsModeTitle.style.color = '#E71C12' // set to red
+      }
+    },
+    async nodeNewsValidation () {
+      const response = JSON.parse(sessionStorage.getItem('selectedNodes'))
+      if ((response === null) || (response === 'undefined')) {
+        this.nodesInputError = true
+        return false
+      }
+
+      this.pickedOrdinaryNodes = response.pickedOrdinaryNodes
+      this.pickedIENodes = response.pickedIENodes
+
+      // // const STOR1_HREF_LEN_MAX = response.STOR1_HREF_LEN_MAX - for alternative
+      // const STOR2_INPUT_LEN_MAX = parseInt(response.STOR2_INPUT_LEN_MAX)
+      // const STOR2_REFS_LEN_MAX = parseInt(response.STOR2_REFS_LEN_MAX) // "textRefsNews" value validation
+      // // const PREV_HREF_LEN_MAX = response.PREV_HREF_LEN_MAX // this.textTitleNews + link on IE --> validation in parent component
+
+      // if ((this.textTitleNews + ' ' + this.textContentNews).length > STOR2_INPUT_LEN_MAX) {
+      //   this.inputLenError = true
+      //   return false
+      // }
+      // if (this.textRefsNews.length > STOR2_REFS_LEN_MAX) {
+      //   this.refsLenError = true
+      //   return false
+      // }
+
+      if (Object.keys(this.pickedIENodes).length === 0) // there is only ORDINARY news
+        this.onlyShortNews = true
+      else { // ask how user want to add news to IE: in fullnews format or short news.
+        await this.$swal.fire({
+          title: 'News format',
+          text: 'What news format do you want to send to the nodes?',
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Full news',
+          cancelButtonText: 'Short news',
+          allowOutsideClick: false
+        }).then((result) => {
+          if (result.dismiss) { // if short news, then save news to NN IE (json full news)
+            this.onlyShortNews = true
+          }
+        })
+      }
+    },
+    async checkIfNodesAdded () {
+      this.showSelectNodesForm = this.showSelectNodesForm ? false : true // eslint-disable-line
+      await this.retrieveOrdinaryAndIENodes().then(() => {
+        if (!this.ordinaryAndIENodesExist) {
+          this.$swal.fire({
+            title: 'ORDINARY/IE nodes?',
+            text: 'To add news to nodes, you need to add node(s) to the list of nodes',
+            icon: 'question',
+            showCancelButton: true,
+            allowOutsideClick: false
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.$router.push({ name: 'add-node' })
+            } else if (result.dismiss) {
+              this.addingNewsNodes = false
+              this.changeAddingMode()
+              this.showSelectNodesForm = false
+            }
+          })
+        }
+      })
+    },
+    clearVariables () {
+      this.firstHasBeenValidated = true
+      this.refsLenError = false
+      this.inputLenError = false
+      this.prevHrefLenError = false
+      this.nodesInputError = false
+      this.onlyShortNews = false
+    },
+
     startQuillEditor () {
       //
     },
@@ -218,6 +378,7 @@ export default {
   },
   async mounted () {
     await this.loadUserData()
+    this.retrieveKeyPair()
     this.quillSettings()
   }
 }

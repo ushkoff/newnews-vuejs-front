@@ -21,7 +21,7 @@ export default {
       }).catch((e) => { throw e })
     },
 
-    async storeArticle (ctx, { categoryID, userID, title, contentHtml, country, countryCode, refs, recaptchaToken }) {
+    async storeArticle (ctx, { categoryID, userID, title, contentHtml, country, countryCode, pubkey, signature, refs, recaptchaToken }) {
       this._vm.$http.defaults.headers.common['Accept'] = 'application/json'
       this._vm.$http.defaults.headers.common['Content-Type'] = 'multipart/form-data'
       this._vm.$http.defaults.headers.common['Authorization'] = 'Bearer ' + ctx.getters.authToken
@@ -33,6 +33,8 @@ export default {
         content_html: contentHtml,
         country,
         country_code: countryCode,
+        author_pubkey: pubkey,
+        signature,
         ...(refs != '') && { refs },
         recaptchaToken
       }

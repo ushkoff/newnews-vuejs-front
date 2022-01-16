@@ -21,9 +21,10 @@
 
           Blocklist
 
-        //-   KeyPairList(:userData="userData")
+          NodeList
 
-        //-   NodeList(:userData="userData")
+          KeyPairList
+
 
         div(class="col-12 col-xl-6 mt-md-5 mt-xl-0")
           .faq-list(class="p-lg-5 p-4")
@@ -36,8 +37,8 @@
 import AuthNavbar from '@/components/app/navigation/AuthNavbar'
 // import SettingsForms from '@/components/settings/Forms'
 import Blocklist from '@/components/settings/Blocklist'
-// import NodeList from '@/components/settings/NodeList'
-// import KeyPairList from '@/components/settings/KeyPairList'
+import NodeList from '@/components/settings/NodeList'
+import KeyPairList from '@/components/settings/KeyPairList'
 import FAQList from '@/components/settings/FAQ'
 import { mapGetters, mapActions } from 'vuex'
 
@@ -56,10 +57,8 @@ export default {
     AuthNavbar,
     // SettingsForms,
     Blocklist,
-
-    // NodeList,
-    // KeyPairList,
-
+    NodeList,
+    KeyPairList,
     FAQList
   },
   methods: {

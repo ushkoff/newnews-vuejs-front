@@ -4,8 +4,7 @@ import naclUtil from 'tweetnacl-util'
 export default {
   state: {
     keyPair: null,
-    nonce: null,
-    signature: null
+    nonce: null
   },
   getters: {
     keyPair (state) {
@@ -13,9 +12,6 @@ export default {
     },
     nonce (state) {
       return state.nonce
-    },
-    signature (state) {
-      return state.signature
     }
   },
   actions: {
@@ -76,15 +72,6 @@ export default {
       else if (secretKey != null && publicKey == null) return 'Public key'
       else if (nonce == null) return 'Nonce value'
       else return true
-    },
-
-    getSignature (ctx, { message, secretKey }) {
-      if (!(secretKey instanceof Uint8Array)) secretKey = naclUtil.decodeBase64(secretKey.toString())
-      if (!(message instanceof Uint8Array)) message = naclUtil.decodeUTF8(message.toString())
-
-      let signature = nacl.sign.detached(message, secretKey) // get signature
-      signature = naclUtil.encodeBase64(signature) // encode it
-      ctx.commit('updateSignature', signature)
     }
   },
   mutations: {
@@ -104,9 +91,6 @@ export default {
     incrementNonce (state) {
       state.nonce += 1
       localStorage.setItem('NONCE', state.nonce)
-    },
-    updateSignature (state, signature) {
-      state.signature = signature
     }
   }
 }

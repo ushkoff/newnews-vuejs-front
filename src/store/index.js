@@ -23,8 +23,13 @@ import blocklist from './modules/users/blocklist'
 import settings from './modules/settings/forms'
 
 // Blockchain & Nodes
-import blockchainCommon from './modules/blockchain/common'
+import keyPair from './modules/blockchain/keyPair'
 import fullNodeNews from './modules/news/node/full'
+import nodesCommon from './modules/blockchain/nodes/common'
+import nodes from './modules/blockchain/nodes/types'
+// Transactions
+import transactionsCommon from './modules/blockchain/transactions/common'
+import transactionNodes from './modules/blockchain/transactions/types'
 
 Vue.use(Vuex)
 
@@ -45,6 +50,10 @@ export default new Vuex.Store({
     user,
     blocklist,
     settings,
-    blockchainCommon
+    keyPair,
+    nodesCommon,
+    nodes,
+    transactionsCommon,
+    transactionNodes
   }
 })

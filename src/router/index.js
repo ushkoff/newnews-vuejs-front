@@ -140,18 +140,18 @@ const routes = [
     meta: { layout: 'main', auth: true },
     component: () => import('../views/blockchain/KeyPair.vue')
   },
-  // {
-  //   path: '/transactions',
-  //   name: 'transactions',
-  //   meta: { layout: 'main', auth: true },
-  //   component: () => import('../views/blockchain/Transactions.vue')
-  // },
-  // {
-  //   path: '/add-node',
-  //   name: 'add-node',
-  //   meta: { layout: 'main', auth: true },
-  //   component: () => import('../views/blockchain/AddNode.vue')
-  // }
+  {
+    path: '/add-node',
+    name: 'add-node',
+    meta: { layout: 'main', auth: true },
+    component: () => import('../views/blockchain/AddNode.vue')
+  },
+  {
+    path: '/transactions',
+    name: 'transactions',
+    meta: { layout: 'main', auth: true },
+    component: () => import('../views/blockchain/Transactions.vue')
+  },
 
   //
   // Documents

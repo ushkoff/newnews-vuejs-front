@@ -39,6 +39,7 @@ Vue.component('LoadMoreBtn', LoadMoreBtn)
 
 Vue.prototype.$http = axios
 Vue.prototype.$api = process.env.VUE_APP_API
+Vue.prototype.$nodeApi = process.env.VUE_APP_NODE_API
 
 Vue.config.productionTip = false
 
