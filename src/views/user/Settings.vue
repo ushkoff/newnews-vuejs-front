@@ -13,12 +13,11 @@
             ul(class="m-0 p-0 ml-0 ml-md-5 mt-5 mt-md-0")
               li Username: <span>{{ userData.username }}</span>
               li Email: <span>{{ userData.email }}</span>
-              li Number of verified news: <span><span title="Confirmed news">{{ userData.verifiedNewsNumber }}</span> / {{ userData.newsNumber }}</span>
               li Country: <span>{{ userData.country }} [{{ userData.countryCode }}]</span>
               li Timezone: <span>{{ userData.timezone }}</span>
               li Date registered: <span>{{ userData.dateRegistered }}</span>
 
-          SettingsForms
+          //- SettingsForms
 
           Blocklist
 
@@ -35,7 +34,7 @@
 
 <script>
 import AuthNavbar from '@/components/app/navigation/AuthNavbar'
-import SettingsForms from '@/components/settings/Forms'
+// import SettingsForms from '@/components/settings/Forms'
 import Blocklist from '@/components/settings/Blocklist'
 // import NodeList from '@/components/settings/NodeList'
 // import KeyPairList from '@/components/settings/KeyPairList'
@@ -55,7 +54,7 @@ export default {
   },
   components: {
     AuthNavbar,
-    SettingsForms,
+    // SettingsForms,
     Blocklist,
 
     // NodeList,

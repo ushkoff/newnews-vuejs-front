@@ -1,11 +1,11 @@
 <template lang="pug">
-  .account-changes(class="mt-4 p-md-5 p-4")
-    .profile-settings-block
-      span.profile-settings-title News confirmation alert
-      form.profile-settings-switch(class="mt-2" @change="setNewsConfirmAlert")
-        div(class="custom-control custom-switch")
-          input(type="checkbox" class="custom-control-input" id="newsConfrimAlertInput" v-model="userData.getConfirmationEmail")
-          label(class="custom-control-label" for="newsConfrimAlertInput") receive email alerts ({{ userData.email }})
+  //- .account-changes(class="mt-4 p-md-5 p-4")
+  //-   .profile-settings-block
+  //-     span.profile-settings-title News confirmation alert
+  //-     form.profile-settings-switch(class="mt-2" @change="setNewsConfirmAlert")
+  //-       div(class="custom-control custom-switch")
+  //-         input(type="checkbox" class="custom-control-input" id="newsConfrimAlertInput" v-model="userData.getConfirmationEmail")
+  //-         label(class="custom-control-label" for="newsConfrimAlertInput") receive email alerts ({{ userData.email }})
 
     //-.profile-settings-block(class="mt-5")
       //- span.profile-settings-title Select the mode of adding news
@@ -61,29 +61,29 @@ export default {
 //     // changeEmailInput: { required, email, maxLength: maxLength(257) },
 //   },
   methods: {
-    ...mapActions(['fetchUserData', 'setNewsConfirmationAlert']),
+    ...mapActions(['fetchUserData']),
 
-    async setNewsConfirmAlert () {
-      const data = {
-        userID: this.userData.id,
-        toSet: this.userData.getConfirmationEmail
-      }
-      this.setNewsConfirmationAlert(data).then(() => {
-        if (this.userData.getConfirmationEmail) {
-            this.$swal.fire({
-            title: 'Success',
-            text: 'You will now receive news confirmation notifications.',
-            icon: 'success'
-            })
-        } else {
-            this.$swal.fire(
-            'Success',
-            'You will no longer receive news confirmation notifications.',
-            'success'
-            )
-        }
-      })
-    },
+    // async setNewsConfirmAlert () {
+    //   const data = {
+    //     userID: this.userData.id,
+    //     toSet: this.userData.getConfirmationEmail
+    //   }
+    //   this.setNewsConfirmationAlert(data).then(() => {
+    //     if (this.userData.getConfirmationEmail) {
+    //         this.$swal.fire({
+    //         title: 'Success',
+    //         text: 'You will now receive news confirmation notifications.',
+    //         icon: 'success'
+    //         })
+    //     } else {
+    //         this.$swal.fire(
+    //         'Success',
+    //         'You will no longer receive news confirmation notifications.',
+    //         'success'
+    //         )
+    //     }
+    //   })
+    // },
     // loadAddingNewsMode () {
     //   if (this.userLoggedIn) this.addingNewsMode = localStorage.getItem('adding_news_mode') || 'signature'
     // },

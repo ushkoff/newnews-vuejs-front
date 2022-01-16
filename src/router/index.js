@@ -134,17 +134,17 @@ const routes = [
     meta: { layout: 'main' },
     component: () => import('../views/blockchain/NWC.vue')
   },
+  {
+    path: '/key-pair',
+    name: 'key-pair',
+    meta: { layout: 'main', auth: true },
+    component: () => import('../views/blockchain/KeyPair.vue')
+  },
   // {
   //   path: '/transactions',
   //   name: 'transactions',
   //   meta: { layout: 'main', auth: true },
   //   component: () => import('../views/blockchain/Transactions.vue')
-  // },
-  // {
-  //   path: '/key-pair',
-  //   name: 'key-pair',
-  //   meta: { layout: 'main', auth: true },
-  //   component: () => import('../views/blockchain/KeyPair.vue')
   // },
   // {
   //   path: '/add-node',

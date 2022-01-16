@@ -17,12 +17,14 @@ import '@fortawesome/fontawesome-free/js/brands'
 
 // Plugins
 import tabTitlePlugin from '@/utils/tab-title.plugin'
+import copyTextPlugin from '@/utils/copy-text.plugin'
 
 Vue.use(VueCookie)
 Vue.use(Vuelidate)
 Vue.use(VueAwesomeSwiper)
 Vue.use(VueSweetalert2)
 Vue.use(tabTitlePlugin)
+Vue.use(copyTextPlugin)
 
 // Components
 import VueRecaptcha from 'vue-recaptcha'

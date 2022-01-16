@@ -86,14 +86,20 @@ export default {
   },
   computed: mapGetters(['userLoggedIn', 'username']),
   methods: {
-    ...mapActions(['fetchUserData', 'logout']),
+    ...mapActions(['fetchUserData', 'logout', 'doesKeyPairExist']),
 
     async logoutHandler () {
-      // this.$swal.fire({
-      //   title: 'Saved data',
-      //   text: 'The local storage can store the data of your keys and nodes. If you want to remove your private data, please remove specific fields from your browser Local Storage.',
-      //   icon: 'warning'
-      // })
+      let msg
+      await this.doesKeyPairExist().then((response) => {
+        msg = response
+      })
+      if (msg != 'Public and Private (Secret) keys, Nonce value') {
+        this.$swal.fire({
+          title: 'Saved data',
+          html: 'The Local Storage can store the data of your keys and nodes. <b>If you want to remove your private data from browser</b>, please remove specific fields from your browser Local Storage.',
+          icon: 'warning'
+        })
+      }
 
       await this.logout().then(() => {
         if (this.$route.name !== 'home') this.$router.push({ name: 'home' })

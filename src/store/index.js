@@ -11,6 +11,7 @@ import localCategoryNews from './modules/news/categories/local'
 import yourNews from './modules/news/lists/your'
 // News Rating
 import rating from './modules/news/rating'
+
 // Auth
 import auth from './modules/auth/auth'
 import passwordReset from './modules/auth/password-reset'
@@ -20,6 +21,10 @@ import user from './modules/users/user'
 import blocklist from './modules/users/blocklist'
 // Settings
 import settings from './modules/settings/forms'
+
+// Blockchain & Nodes
+import blockchainCommon from './modules/blockchain/common'
+import fullNodeNews from './modules/news/node/full'
 
 Vue.use(Vuex)
 
@@ -33,11 +38,13 @@ export default new Vuex.Store({
     localCategoryNews,
     yourNews,
     rating,
+    fullNodeNews,
     auth,
     passwordReset,
     location,
     user,
     blocklist,
-    settings
+    settings,
+    blockchainCommon
   }
 })

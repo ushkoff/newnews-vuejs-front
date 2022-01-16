@@ -25,12 +25,12 @@
             //- TOOLS buttons
             div(class="d-flex align-items-center justify-content-start mb-2")
               RefreshBtn(addClass="ml-2" @click="refreshNews")
-              Checkbox(
-                title="only confirmed"
-                addClass="ml-4"
-                v-if="!searchQueryString"
-                @change="loadFirstNews('', onlyConfirmedChecked)" v-model="onlyConfirmedChecked"
-              )
+              //- Checkbox(
+              //-   title="only confirmed"
+              //-   addClass="ml-4"
+              //-   v-if="!searchQueryString"
+              //-   @change="loadFirstNews('', onlyConfirmedChecked)" v-model="onlyConfirmedChecked"
+              //- )
 
             //- SEARCH messages
             span.search-results(
